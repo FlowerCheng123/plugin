@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Plugin</title>
+	<style type="text/css">
+	    *{
+	    	margin:0px;padding:0px;
+	    }
+        html, body {
+		   height: 100%;
+		}
+		.flower-slider, .flower-slider ul.content{
+			height: 100%;
+		} 
+        .flower-slider ul.content li{
+        	width: 100%;
+        	height: 100%;
+        	list-style-type: none;
+        }
+        .flower-slider ul.content li:first-child{
+        	background: #ccc;
+        }
+        .flower-slider ul.content li:nth-child(2){
+        	background: #7b37a6;
+        }
+        .flower-slider ul.content li:nth-child(3){
+        	background: #E3E377;
+        }
+        .flower-slider .controller{
+        	position: fixed;
+        	top:100px;
+        	left: 100px;
+        }
+        .flower-slider .controller li{
+        	width: 14px;
+        	height: 14px;
+        	border-radius: 7px;
+        	background: #B4ABAB;
+        	list-style-type: none;
+        	margin-top: 14px;
+        	cursor: pointer;
+        }
+        .flower-slider .controller li:hover, .flower-slider .controller li.active{
+	        background: #9F9292;
+	        width: 16px;
+        	height: 16px;
+        	border-radius: 8px;
+        	margin-left: -1px;
+        }
+	</style>
+</head>
+<body >
+    <div id="flowerSlider" class="flower-slider">
+        <ul class="content"> 
+       	   <li>第一页</li>
+       	   <li>第二页</li>
+       	   <li>第三页</li>
+       	   <li>第四页</li>
+        </ul>
+        <div class="controller" >
+	        <ul>
+	        	<li class="active"></li>
+	        	<li></li>
+	        	<li></li>
+	        	<li></li>
+	        </ul>
+        </div>
+    </div>
+</body>
+<script src="http://cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script src="./js/Slider.js"></script>
+</html>
