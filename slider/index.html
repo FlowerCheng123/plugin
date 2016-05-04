@@ -58,9 +58,9 @@
        	   <li>第三页</li>
        	   <li>第四页</li>
         </ul>
-        <div class="controller" >
+        <div class="controller">
 	        <ul>
-	        	<li class="active"></li>
+	        	<li></li>
 	        	<li></li>
 	        	<li></li>
 	        	<li></li>
@@ -70,4 +70,13 @@
 </body>
 <script src="http://cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
 <script src="./js/Slider.js"></script>
+<script type="text/javascript">
+	$(function(){
+		var slider = new Slider({
+			pageNum:4,
+		    aniSpeed: 800,
+		    slideByPage: true
+		}, 'flowerSlider');
+	})
+</script>
 </html>

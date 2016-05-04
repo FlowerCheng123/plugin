@@ -1,7 +1,7 @@
 /**
  * [Slider plugin]
- * @param {[type]} options [description]
- * @param string id  for flower-slider's id
+ * @author Flower
+ * @date  2016/4/29
  */
 function Slider( options, id ){
 	var self = this;
@@ -10,6 +10,27 @@ function Slider( options, id ){
     	throw new Error( 'params error' );
     	return;
     }
+    function getVendorPrefix() {
+	  // 使用body是为了避免在还需要传入元素
+	  var body = document.body || document.documentElement,
+	    style = body.style,
+	    vendor = ['webkit', 'khtml', 'moz', 'ms', 'o'],
+	    i = 0;
+	 
+	  while (i < vendor.length) {
+	    // 此处进行判断是否有对应的内核前缀
+	    if (typeof style[vendor[i] + 'Transition'] === 'string') {
+	      return vendor[i];
+	    }
+	    i++;
+	  }
+	}
+	/**
+	 * [getHeight get the doucment height]
+	 */
+	var getHeight = function(){
+		return document.body.clientHeight || document.documentElement.clientHeight;
+	}
     /**
      * [defaultOpts initial the params]
      */
@@ -20,13 +41,14 @@ function Slider( options, id ){
     	slideByPage: false
     };
     var options = $.extend(defaultOpts, options);
-    console.log( 'options', options );
-    
 	self.pages = [];
 	for( var i=0;i<options.pageNum;i++){
 		self.pages.push({index:i});
 	}
-	self.currentPage = self.pages[0];
+	var _currentIndex = Math.round( $(window).scrollTop()/getHeight()||0 );
+
+	self.currentPage = self.pages[_currentIndex];
+	$('#'+id + ' .controller li').eq(_currentIndex).addClass('active');
 	
 	if( !jQuery ){
 		throw new Error( 'please import jQuery before using this plugin' );
@@ -38,9 +60,9 @@ function Slider( options, id ){
 	 * @param aniTime: how long animation lasts
 	 */
 	var scrollGo = function( index, aniTime ){
-		if( isScroll || index<0 || index>self.pages.length) return;
+		if( isScroll || index<0 || (index+1)>self.pages.length || (index+1)>options.pageNum ) return;
 		isScroll = true;
-		$( 'html, body' ).animate({ scrollTop: index*getHeight() }, aniTime|| options.aniSpeed, function(){
+		(getVendorPrefix()=='webkit'?$( 'body' ):$('html')).animate({ scrollTop: index*getHeight() }, aniTime|| options.aniSpeed, function(){
 			isScroll = false;
 		});
 		self.currentPage = self.pages[index];
@@ -51,12 +73,7 @@ function Slider( options, id ){
 			};
 		})
 	}
-	/**
-	 * [getHeight get the doucment height]
-	 */
-	var getHeight = function(){
-		return document.body.clientHeight || document.documentElement.clientHeight;
-	}
+	
 	$('#'+id + ' .controller li').click(function(event){
 	    scrollGo($(this).index());
 	});
@@ -77,7 +94,6 @@ function Slider( options, id ){
 
         if(document.addEventListener){//W3C
 		    document.addEventListener('DOMMouseScroll',function(event){
-		    	console.log( 'event', event);
 		    	event.wheelDeltaY > 0?scrollGo( self.currentPage.index-1):scrollGo(self.currentPage.index+1);
 		    },false);
 		}
@@ -92,7 +108,6 @@ function Slider( options, id ){
 	}
 }
 Slider.prototype.next = function(){
-	console.log( 'this', this );
 	if( this.currentPage.index < this.pages.length-1 ){
 		this.slide( this.currentPage.index +1 );
 	}
@@ -108,10 +123,6 @@ Slider.prototype.go = function( index ){
 	}
 }
 
-var slider = new Slider({
-	pageNum:4,
-    aniSpeed: 1000,
-    slideByPage: true
-}, 'flowerSlider');
+
 
 
