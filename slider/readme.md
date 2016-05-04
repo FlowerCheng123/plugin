@@ -1,7 +1,7 @@
 #Slider plugin by Flower
-*1.you must import jquery lib
-*2.import Slider.js
-*3.init plugin
+* 1.you must import jquery lib
+* 2.import Slider.js
+* 3.init plugin
 
 ####Demo
 var slider = new Slider({
